@@ -5,6 +5,7 @@ import "dotenv/config";
 import { sequelize } from "./database";
 import typeDefs from "./typeDefs";
 import resolvers from "./resolvers";
+import { getTokenFromHeaders, verifyToken } from './utils/auth'
 
 const app = express();
 
@@ -13,7 +14,15 @@ app.disable("x-powered-by");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  playground: true
+  playground: true,
+  context: ({ req }) => {
+    const token = getTokenFromHeaders(req);
+
+    return {
+      token,
+      user: verifyToken(token)
+    };
+  }
 });
 
 server.applyMiddleware({ app });

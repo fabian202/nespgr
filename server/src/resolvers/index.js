@@ -1,3 +1,4 @@
 import user from "./user";
+import todo from './todo'
 
-export default [user];
+export default [user, todo];

@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "dotenv/config";
-import { register } from "./api";
+import { register, login } from "./api";
 import { sequelize } from "../../database";
 import { User } from "../../models";
 import app from "../../index";
@@ -45,4 +45,45 @@ describe("users", () => {
       email: expectedUser.email
     });
   });
+
+  it("it should login an user", async () => {
+    //Create an user
+    const newUser = {
+      username: "valid",
+      email: "valid@valid.com",
+      password: "123456"
+    };
+
+    await User.create(newUser);
+
+    let {
+      data: { data }
+    } = await login({
+      email: "valid@valid.com",
+      password: "123456"
+    });
+
+    expect(data.login).to.not.be.null;
+  });
+
+  it("it should reject an user", async () => {
+    //Create an user
+    const newUser = {
+      username: "valid",
+      email: "valid@valid.com",
+      password: "123456"
+    };
+
+    await User.create(newUser);
+
+    let {
+      data: { data }
+    } = await login({
+      email: "valid@valid.com",
+      password: "1234560"
+    });
+
+    expect(data.login).to.be.null;
+  });
+
 });

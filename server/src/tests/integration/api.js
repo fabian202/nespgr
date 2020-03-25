@@ -22,3 +22,21 @@ export const register = async variables =>
   `,
     variables
   });
+
+  export const login = async variables =>
+  axios.post(API_URL, {
+    query: `
+    mutation(
+      $email: String!,
+      $password: String!
+    ) {
+      login(
+        email: $email,
+        password: $password
+      ) {
+        token
+      }
+    }
+  `,
+    variables
+  });

@@ -27,4 +27,8 @@ User.beforeCreate(function(user) {
   user.password = bcrypt.hashSync(user.password, saltRounds);
 });
 
+User.prototype.validatePassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+}
+
 export default User;

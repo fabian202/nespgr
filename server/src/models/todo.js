@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 import { sequelize } from "../database";
 import User from './user'
 
-const Todo = sequelize.define("todoes", {
+const Todo = sequelize.define("todos", {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
