@@ -1,11 +1,10 @@
-import { AuthenticationError } from "apollo-server-express";
 import { Todo, User } from "../models";
 
 export default {
   Query: {
-    todos: (root, { userId }, context, info) => {
+    getTodos: (root, args, { user }, info) => {
       return Todo.findAll({
-        where: { userId },
+        where: { userId: user.id },
         include: [
           {
             model: User
@@ -15,9 +14,25 @@ export default {
     }
   },
   Mutation: {
-    create: (root, args, context, info) => {
-      const todo = Todo.create(args);
-      return todo;
-    }
+    createTodo: (root, args, { user }, info) => {
+      const todo = {
+        todo: args.todo,
+        userId: user.id
+      }
+
+      return Todo.create(todo);
+    },
+    deleteTodo: (root, args, { user }, info) => {
+      return {
+        todo: args.todo,
+        userId: user.id
+      };
+    },
+    updateTodo: (root, args, { user }, info) => {
+      return {
+        todo: args.todo,
+        userId: user.id
+      };
+    },
   }
 };

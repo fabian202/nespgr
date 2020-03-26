@@ -7,7 +7,6 @@ import app from "../../index";
 
 let server;
 let connection;
-
 before(async () => {
   connection = await sequelize.sync({ force: true });
   server = await app.listen(5000);
@@ -85,5 +84,4 @@ describe("users", () => {
 
     expect(data.login).to.be.null;
   });
-
 });

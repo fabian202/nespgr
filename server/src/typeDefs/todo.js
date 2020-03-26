@@ -2,11 +2,13 @@ import { gql } from "apollo-server-express";
 
 export default gql`
   extend type Query {
-    todos(userId: Int!): [Todo]
+    getTodos: [Todo]
   }
 
   extend type Mutation {
-    create(todo: String!, userId: Int!) : Todo,
+    createTodo(todo: String!) : Todo,
+    deleteTodo(todoId: Int!) : Todo,
+    updateTodo(todoId: Int!) : Todo
   }
 
   type Todo {
