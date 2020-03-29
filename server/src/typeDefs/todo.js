@@ -7,8 +7,8 @@ export default gql`
 
   extend type Mutation {
     createTodo(todo: String!) : Todo,
-    deleteTodo(todoId: Int!) : Todo,
-    updateTodo(todoId: Int!) : Todo
+    deleteTodo(id: Int!) : Boolean!,
+    updateTodo(id: Int!, todo: String!) : Boolean!
   }
 
   type Todo {

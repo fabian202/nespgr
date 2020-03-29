@@ -91,13 +91,13 @@ export const updateTodo = async (variables, token) =>
     {
       query: `
     mutation(
+      $id: Int!
       $todo: String!
     ) {
       updateTodo(
-        todo: $todo,
-      ) {
-        todo
-      }
+        id: $id
+        todo: $todo
+      )
     }
   `,
       variables
@@ -115,13 +115,11 @@ export const deleteTodo = async (variables, token) =>
     {
       query: `
     mutation(
-      $todo: String!
+      $id: Int!
     ) {
       deleteTodo(
-        todo: $todo,
-      ) {
-        todo
-      }
+        id: $id,
+      )
     }
   `,
       variables

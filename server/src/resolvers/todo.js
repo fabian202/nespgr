@@ -18,21 +18,21 @@ export default {
       const todo = {
         todo: args.todo,
         userId: user.id
-      }
+      };
 
       return Todo.create(todo);
     },
-    deleteTodo: (root, args, { user }, info) => {
-      return {
-        todo: args.todo,
-        userId: user.id
-      };
+    deleteTodo: async (root, { id }, { user }, info) => {
+      //Delete the todo that belongs to me!
+      const deleted = await Todo.destroy({ where: { id, userId: user.id } });
+      return deleted ? true : false;
     },
-    updateTodo: (root, args, { user }, info) => {
-      return {
-        todo: args.todo,
-        userId: user.id
-      };
-    },
+    updateTodo: async (root, { id, todo }, { user }, info) => {
+      const updated = await Todo.update(
+        { todo },
+        { where: { id, userId: user.id } }
+      );
+      return updated ? true : false;
+    }
   }
 };
